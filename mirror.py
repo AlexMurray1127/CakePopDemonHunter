@@ -36,7 +36,8 @@ def spawn_corner_demon(w, h):
     ])
 
 def spawn_falling_demon(w):
-    return [w // 2, 0]
+    x = random.randint(0, w - 40) # Random X position across width
+    return [x, 0]
     
 # Score
 score = 0
@@ -139,7 +140,12 @@ while True:
     # Save prev frame 
     prev_gray = gray 
 
+    # Show Score
+    cv.putText(frame, f"Score: {score}", (20, 40),
+                cv.FONT_HERSHEY_SIMPLEX, 1.1, (255, 255, 255), 3)
 
+
+    # Show "Game Over" / Quit
     if game_over:
             cv.putText(frame, "GAME OVER!", (w // 3, h // 2),
                         cv.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 5)
@@ -147,16 +153,10 @@ while True:
             cv.waitKey(3000)
             break
 
-    # Show "Game Over" / Quit
-
-
     cv.imshow("CakePopGame", frame)
 
     if cv.waitKey(1) & 0xFF == ord('q'):
         break
-    # See if user wants to quit
-    #if cv.waitKey(1) == ord('q'):
-     #   break
  
 # When everything done, release the capture
 cap.release()
